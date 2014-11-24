@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">momo</string>
+    <string name="title_activity_my">MyActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_welcome">WelcomeActivity</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="user_name_hint">User Name</string>
+    <string name="user_passCode_hint">PassCode</string>
+    <string name="Login_button_hint">Sign in</string>
+    <string name="title_activity_home">Home</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="CONVERSATION_TAG">CONVERSATION</string>
+
+
+</resources>

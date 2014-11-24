@@ -1,0 +1,48 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_background"
+    tools:context="com.xin.momo.LoginActivity">
+
+    <ImageView
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="50dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/gco"
+        android:id="@+id/user_image"/>
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/login_edittext_selector"
+        android:hint="@string/user_name_hint"
+        android:paddingLeft="10dp"
+        android:id="@+id/user_account"
+        android:layout_below="@+id/user_image"/>
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/login_edittext_selector"
+        android:layout_below="@+id/user_account"
+        android:paddingLeft="10dp"
+        android:inputType="textPassword"
+        android:id="@+id/user_passCode"
+        android:hint="@string/user_passCode_hint"
+        />
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/activity_login_widget_height"
+        android:layout_below="@+id/user_passCode"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:textSize="@dimen/activity_login_text_size"
+        android:id="@+id/login_button"
+        android:textColor="@color/white"
+        android:text="@string/Login_button_hint"
+        android:background="@drawable/login_button_background"/>
+
+</RelativeLayout>

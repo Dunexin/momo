@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="login_button_color">#FF1FB9F2</color>
+    <color name="white">#FFFFFF</color>
+    <color name="dividing_line_color">#FFE9E9EA</color>
+</resources>

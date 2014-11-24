@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#FFFFFF" />
+    <corners android:radius="0dip"/>
+    <size
+        android:height="@dimen/activity_login_widget_height"/>
+    <stroke
+        android:width="1dip"
+        android:color="#FFE9E9EA" />
+</shape>
