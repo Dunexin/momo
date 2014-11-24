@@ -15,7 +15,6 @@ import com.xin.momo.fragmentTab.ContactFragment;
 import com.xin.momo.fragmentTab.ConversationFragment;
 import com.xin.momo.fragmentTab.PluginFragment;
 
-
 public class HomeActivity extends ActionBarActivity implements OnClickListener{
 
     private ImageButton mConversation;
@@ -71,31 +70,31 @@ public class HomeActivity extends ActionBarActivity implements OnClickListener{
                 mConversation.setBackgroundResource(R.drawable.skin_tab_icon_conversation_selected);
                 if(mConversationFragment == null){
                     mConversationFragment = new ConversationFragment();
-                    activeFragment = mConversationFragment;
                     fragmentTransaction.add(R.id.home_activity_content, mConversationFragment);
                 }else{
                     fragmentTransaction.show(mConversationFragment);
                 }
+                activeFragment = mConversationFragment;
                 break;
             case R.id.home_contact_button:
                 mContact.setBackgroundResource(R.drawable.skin_tab_icon_contact_selected);
                 if(mContactFragment == null){
                     mContactFragment = new ContactFragment();
-                    activeFragment = mContactFragment;
                     fragmentTransaction.add(R.id.home_activity_content, mContactFragment);
                 }else{
                     fragmentTransaction.show(mContactFragment);
                 }
+                activeFragment = mContactFragment;
                 break;
             case R.id.home_plugin_button:
                 mPlugin.setBackgroundResource(R.drawable.skin_tab_icon_plugin_selected);
                 if(mPluginFragment == null){
                     mPluginFragment = new PluginFragment();
-                    activeFragment = mPluginFragment;
                     fragmentTransaction.add(R.id.home_activity_content, mPluginFragment);
                 }else{
                     fragmentTransaction.show(mPluginFragment);
                 }
+                activeFragment = mPluginFragment;
                 break;
         }
 

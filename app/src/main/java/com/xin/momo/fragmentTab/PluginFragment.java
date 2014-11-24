@@ -3,12 +3,12 @@ package com.xin.momo.fragmentTab;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.xin.momo.R;
+import com.xin.momo.utils.L;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,7 +61,7 @@ public class PluginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        Log.i("xin_log", "plugin");
+        L.i("plugin");
         return inflater.inflate(R.layout.fragment_plugin, container, false);
     }
 

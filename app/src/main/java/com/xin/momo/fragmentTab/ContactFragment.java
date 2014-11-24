@@ -1,14 +1,15 @@
 package com.xin.momo.fragmentTab;
 
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.xin.momo.R;
+import com.xin.momo.utils.L;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -49,6 +50,12 @@ public class ContactFragment extends Fragment {
     }
 
     @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        L.i("contact-attach");
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
@@ -61,7 +68,7 @@ public class ContactFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        Log.i("xin_log", "contact");
+        L.i("contact");
         return inflater.inflate(R.layout.fragment_contact, container, false);
     }
 

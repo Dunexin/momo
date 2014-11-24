@@ -3,7 +3,6 @@ package com.xin.momo;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +10,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+
+import com.xin.momo.utils.L;
 
 
 public class LoginActivity extends Activity implements OnClickListener {
@@ -51,7 +52,7 @@ public class LoginActivity extends Activity implements OnClickListener {
     @Override
     public void onClick(View v) {
 
-        Log.i("xin_test", String.valueOf(v.getId()));
+        L.i(String.valueOf(v.getId()));
 
         switch (v.getId()){
             case R.id.login_button:

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 
 public class WelcomeActivity extends Activity {
@@ -20,7 +19,6 @@ public class WelcomeActivity extends Activity {
             @Override
             public void run() {
 
-                Toast.makeText(WelcomeActivity.this, "text", Toast.LENGTH_SHORT).show();
                 Intent LoginActivity = new Intent(WelcomeActivity.this, LoginActivity.class);
                 startActivity(LoginActivity);
                 WelcomeActivity.this.finish();
