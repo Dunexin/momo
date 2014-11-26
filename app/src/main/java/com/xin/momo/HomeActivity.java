@@ -1,10 +1,10 @@
 package com.xin.momo;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,7 +15,7 @@ import com.xin.momo.fragmentTab.ContactFragment;
 import com.xin.momo.fragmentTab.ConversationFragment;
 import com.xin.momo.fragmentTab.PluginFragment;
 
-public class HomeActivity extends ActionBarActivity implements OnClickListener{
+public class HomeActivity extends Activity implements OnClickListener{
 
     private ImageButton mConversation;
     private ImageButton mPlugin;

@@ -6,7 +6,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
+import com.xin.momo.Adapter.ConversationAdapter;
+import com.xin.momo.Adapter.ConversationData;
+import com.xin.momo.Adapter.ConversationDataList;
 import com.xin.momo.R;
 import com.xin.momo.utils.L;
 
@@ -55,6 +59,22 @@ public class ConversationFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mListView = (ListView) getActivity().findViewById(R.id.conversation_list_view);
+        ConversationDataList conversationDataList = new ConversationDataList();
+        conversationDataList.addConversationData(new ConversationData("今天天气真啊好哦", "10:20", "愤怒的小明", null));
+        conversationDataList.addConversationData(new ConversationData("今天天气真啊好哦", "10:24", "愤怒的小明", null));
+        conversationDataList.addConversationData(new ConversationData("今天天气真啊好哦", "10:23", "愤怒的小明", null));
+
+        conversationDataList.addConversationData(new ConversationData("今天天气真啊好哦", "10:20", "愤怒的小明", null));
+        conversationDataList.addConversationData(new ConversationData("今天天气真啊好哦", "10:24", "愤怒的小明", null));
+        conversationDataList.addConversationData(new ConversationData("今天天气真啊好哦", "10:23", "愤怒的小明", null));
+        mListView.setAdapter(new ConversationAdapter(getActivity(), conversationDataList));
     }
 
     @Override
@@ -65,5 +85,5 @@ public class ConversationFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_conversation, container, false);
     }
 
-
+    private ListView mListView = null;
 }

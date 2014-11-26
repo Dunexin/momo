@@ -15,13 +15,14 @@
         <activity
             android:name="com.xin.momo.LoginActivity"
             android:label="@string/title_activity_login"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         </activity>
         <activity
             android:name="com.xin.momo.HomeActivity"
             android:label=""
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            android:theme="@style/HomeActivityTheme" >
+            android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
     </application>
     <!-- To access Google+ APIs: -->

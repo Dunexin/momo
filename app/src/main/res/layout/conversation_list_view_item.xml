@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="72dp"
+    android:paddingLeft="10dp"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    android:paddingRight="10dp">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:id="@+id/conversation_item_head_image"
+        android:src="@drawable/gco"/>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:layout_toEndOf="@+id/conversation_item_head_image">
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="36dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:id="@+id/conversation_friend_name_textView"
+                android:layout_alignParentLeft="true"
+                android:text="宝贝"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:gravity="center_vertical"
+                android:layout_toLeftOf="@+id/conversation_chat_data_time_textView"
+                android:layout_toStartOf="@+id/conversation_chat_data_time_textView" />
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="fill_parent"
+                android:textColor="#FF7D7D7D"
+                android:layout_alignParentRight="true"
+                android:text="10:35"
+                android:gravity="center"
+                android:id="@+id/conversation_chat_data_time_textView"
+                />
+            </RelativeLayout>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="26dp"
+            android:singleLine="true"
+            android:gravity="center_vertical"
+            android:id="@+id/conversation_chat_abstract"
+            android:ellipsize="end"
+            android:textColor="#FF7D7D7D"
+            android:textSize="16sp"/>
+        </LinearLayout>
+</RelativeLayout>
