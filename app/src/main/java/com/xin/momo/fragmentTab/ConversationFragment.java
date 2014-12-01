@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.xin.momo.Adapter.ConversationAdapter;
@@ -74,7 +75,19 @@ public class ConversationFragment extends Fragment {
         conversationDataList.addConversationData(new ConversationData("今天天气真啊好哦", "10:20", "愤怒的小明", null));
         conversationDataList.addConversationData(new ConversationData("今天天气真啊好哦", "10:24", "愤怒的小明", null));
         conversationDataList.addConversationData(new ConversationData("今天天气真啊好哦", "10:23", "愤怒的小明", null));
+        conversationDataList.addConversationData(new ConversationData("今天天气真啊好哦", "10:20", "愤怒的小明", null));
+        conversationDataList.addConversationData(new ConversationData("今天天气真啊好哦", "10:20", "愤怒的小明", null));
+        conversationDataList.addConversationData(new ConversationData("今天天气真啊好哦", "10:24", "愤怒的小明", null));
+        conversationDataList.addConversationData(new ConversationData("今天天气真啊好哦", "10:23", "愤怒的小明", null));
+        conversationDataList.addConversationData(new ConversationData("今天天气真啊好哦", "10:24", "愤怒的小明", null));
+        conversationDataList.addConversationData(new ConversationData("今天天气真啊好哦", "10:23", "愤怒的小明", null));
         mListView.setAdapter(new ConversationAdapter(getActivity(), conversationDataList));
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                L.i(position + "  " + id);
+            }
+        });
     }
 
     @Override

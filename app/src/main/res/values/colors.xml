@@ -6,4 +6,6 @@
     <color name="dividing_line_color">#FFE9E9EA</color>
     <color name="silver">#C0C0C0</color>
     <color name="black">#000000</color>
+    <color name="line_color">#FFA4A4A4</color>
+    <color name="chat_room_bottom_bar_back">#FFEBECEE</color>
 </resources>

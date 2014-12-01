@@ -8,11 +8,15 @@
     <style name="HomeActivityTheme"
         parent="@style/Theme.AppCompat.Light">
 
+        <item name="android:text"></item>
         <item name="android:actionBarStyle">@style/BaseTheme</item>
         <item name="android:logo">@drawable/gco</item>
         <item name="logo">@drawable/gco</item>
     </style>
 
+     <style name="ChatRoomNoBar" parent="android:Theme.Holo.Light.DarkActionBar">
+        <item name="android:windowNoTitle">true</item>
+    </style>
     <style name="BaseTheme"
         parent="@style/Widget.AppCompat.ActionBar">
         <item name="android:background">@drawable/hpr</item>

@@ -3,7 +3,7 @@ package com.xin.momo.Adapter;
 import android.graphics.Bitmap;
 
 /**
- * Created by Administrator on 2014/11/26.
+ * Created by xin on 2014/11/26.
  */
 public class ConversationData {
 

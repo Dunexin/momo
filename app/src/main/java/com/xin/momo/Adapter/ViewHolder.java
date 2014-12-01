@@ -1,7 +1,7 @@
 package com.xin.momo.Adapter;
 
 /**
- * Created by Administrator on 2014/11/26.
+ * Created by xin on 2014/11/26.
  */
 
 import android.content.Context;

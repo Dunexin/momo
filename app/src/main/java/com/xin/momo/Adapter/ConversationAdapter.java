@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.xin.momo.R;
 
 /**
- * Created by Administrator on 2014/11/26.
+ * Created by xin on 2014/11/26.
  */
 public class ConversationAdapter extends BaseAdapter{
 

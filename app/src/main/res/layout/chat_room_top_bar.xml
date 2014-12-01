@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="@dimen/activity_custom_action_bar_height"
+    android:paddingLeft="@dimen/activity_custom_action_bar_padding_left"
+    android:paddingRight="@dimen/activity_custom_action_bar_padding_right"
+    android:background="@drawable/hpr"
+    android:gravity="center_vertical">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal"
+        android:id="@+id/chat_room_back"
+        android:gravity="center_vertical">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/header_btn_back_selector"
+        android:paddingRight="-22dp"
+        android:clickable="true"
+        android:id="@+id/back_imageView" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="消息"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        android:id="@+id/chat_room_top_bar_send"/>
+
+    </LinearLayout>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:clickable="true"
+        android:src="@drawable/header_icon_selector"
+        android:id="@+id/header_icon_imageButton" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/header_twocall_selector"
+        android:clickable="true"
+        android:layout_toLeftOf="@+id/header_icon_imageButton"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:layout_centerHorizontal="true"
+        android:text="宝贝"
+        android:id="@+id/chat_room_friend_name_textView" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:id="@+id/chat_room_friend_status"
+        android:textSize="12sp"
+        android:layout_below="@+id/chat_room_friend_name_textView"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>

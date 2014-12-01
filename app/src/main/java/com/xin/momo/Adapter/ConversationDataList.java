@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Administrator on 2014/11/26.
+ * Created by xin on 2014/11/26.
  */
 public class ConversationDataList {
 
