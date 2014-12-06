@@ -1,16 +1,21 @@
 package com.xin.momo.fragmentTab;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ViewFlipper;
+import android.widget.AdapterView;
 
+import com.xin.momo.Adapter.FacePagerAdapter;
+import com.xin.momo.Adapter.FacePagerData;
+import com.xin.momo.FacePointSelect;
 import com.xin.momo.R;
+import com.xin.momo.utils.L;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,10 +24,14 @@ import com.xin.momo.R;
  * to handle interaction events.
  *
  */
-public class ChatRoomFaceFragment extends Fragment implements View.OnTouchListener{
+public class ChatRoomFaceFragment extends Fragment {
 
     private OnFaceFragmentInteractionListener mListener;
-    private ViewFlipper mViewFlipper;
+    private ViewPager mViewPager;
+    private FacePagerData mFacePagerData;
+    private String []faceWord;
+    private FacePointSelect facePointSelect;
+
 
     public ChatRoomFaceFragment() {
         // Required empty public constructor
@@ -36,6 +45,7 @@ public class ChatRoomFaceFragment extends Fragment implements View.OnTouchListen
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        L.i("Face Fragment create");
         return inflater.inflate(R.layout.face_expression_layout, container, false);
     }
 
@@ -63,23 +73,36 @@ public class ChatRoomFaceFragment extends Fragment implements View.OnTouchListen
         mListener = null;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initWidget();
+    }
+
     private void initWidget(){
 
-        mViewFlipper = (ViewFlipper) getActivity().findViewById(R.id.face_view_flipper);
-        mViewFlipper.setOnTouchListener(this);
+        initFaceWord();
+
+        mViewPager = (ViewPager) getActivity().findViewById(R.id.face_view_pager);
+        mFacePagerData = new FacePagerData(getActivity());
+        mFacePagerData.setOnGridViewItemListener(new OnGridViewItemListener());
+        mViewPager.setAdapter(new FacePagerAdapter(mFacePagerData, getActivity()));
+        mViewPager.setOnPageChangeListener(new FacePageOnPageChangeListener());
+        mViewPager.setCurrentItem(0);
+
+        facePointSelect = new FacePointSelect(getActivity(), mViewPager.getAdapter().getCount());
     }
 
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
+    private void initFaceWord(){
+        new Thread(){
 
-        if(v.getId() == R.id.face_view_flipper) {
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN :
-                    break;
+            @Override
+            public void run() {
+                faceWord = getActivity().getResources().getStringArray(R.array.face_word);
             }
-        }
-        return false;
+        }.start();
     }
+
 
     /**
      * This interface must be implemented by activities that contain this
@@ -92,8 +115,45 @@ public class ChatRoomFaceFragment extends Fragment implements View.OnTouchListen
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFaceFragmentInteractionListener {
-        // TODO: Update argument type and name
+
         public void onFragmentInteraction(Uri uri);
+        public void FaceInput(long faceId, String faceName, long resource);
+        public void FaceFragmentDeleteEven(AdapterView<?> parent, View view, int position, long id);
     }
 
+    class FacePageOnPageChangeListener implements ViewPager.OnPageChangeListener {
+
+        @Override
+        public void onPageScrolled(int i, float v, int i2) {
+
+        }
+
+        @Override
+        public void onPageSelected(int i) {
+
+            facePointSelect.SetPoint(i);
+        }
+        @Override
+        public void onPageScrollStateChanged(int i) {
+
+        }
+    }
+
+    class OnGridViewItemListener implements FacePagerData.OnGridViewItemListener{
+
+        @Override
+        public void onGridViewItemClick(long itemId, long resource) {
+
+            L.i("Face id " + String.valueOf(itemId));
+            if (faceWord != null) {
+                mListener.FaceInput(itemId, faceWord[((int) itemId)], resource);
+            }
+        }
+
+        @Override
+        public void onDeleteButtonClick(AdapterView<?> parent, View view, int position, long id) {
+
+            mListener.FaceFragmentDeleteEven(parent, view, position, id);
+        }
+    }
 }

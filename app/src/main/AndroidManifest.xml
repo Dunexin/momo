@@ -28,6 +28,11 @@
             android:name=".ChatRoomActivity"
             android:theme="@android:style/Theme.Light.NoTitleBar"
             android:label="@string/title_activity_chat_room" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
     <!-- To access Google+ APIs: -->

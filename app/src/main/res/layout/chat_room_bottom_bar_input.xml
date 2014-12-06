@@ -10,8 +10,8 @@
     android:gravity="center_vertical">
 
     <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="@dimen/chat_room_bottom_bar_item_height"
+        android:layout_height="@dimen/chat_room_bottom_bar_item_height"
         android:paddingRight="-13dp"
         android:paddingLeft="-10dp"
         android:layout_alignParentTop="true"
@@ -20,8 +20,8 @@
         android:clickable="true"
         android:src="@drawable/qz_icon_face_selector"/>
     <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="@dimen/chat_room_bottom_bar_item_height"
+        android:layout_height="@dimen/chat_room_bottom_bar_item_height"
         android:clickable="true"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/chat_root_bar_qz_icon_face_imageView"
@@ -29,10 +29,10 @@
         android:paddingLeft="-15dp"
         android:id="@+id/chat_room_bar_more_imageView"
         android:src="@drawable/aio_more_selector"/>
-    <EditText
+    <com.xin.momo.CustomView.CustomEditTextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:minHeight="30dp"
+        android:minHeight="@dimen/chat_room_bottom_bar_item_height"
         android:maxLines="3"
         android:id="@+id/chat_room_bar_edit_text"
         android:paddingLeft="8dp"
@@ -45,7 +45,7 @@
 
     <ImageView
         android:layout_width="50dp"
-        android:layout_height="30dp"
+        android:layout_height="@dimen/chat_room_bottom_bar_item_height"
         android:layout_alignParentRight="true"
         android:clickable="true"
         android:padding="2dp"

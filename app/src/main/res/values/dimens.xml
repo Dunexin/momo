@@ -6,5 +6,6 @@
     <dimen name="activity_custom_action_bar_height">60dp</dimen>
     <dimen name="activity_custom_action_bar_padding_left">8dp</dimen>
     <dimen name="activity_custom_action_bar_padding_right">8dp</dimen>
+    <dimen name="chat_room_bottom_bar_item_height">35dp</dimen>
     <dimen name="activity_login_text_size">30sp</dimen>
 </resources>

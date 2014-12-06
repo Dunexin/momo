@@ -1,10 +1,9 @@
 package com.xin.momo;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,13 +14,13 @@ import com.xin.momo.fragmentTab.ContactFragment;
 import com.xin.momo.fragmentTab.ConversationFragment;
 import com.xin.momo.fragmentTab.PluginFragment;
 
-public class HomeActivity extends Activity implements OnClickListener{
+public class HomeActivity extends FragmentActivity implements OnClickListener{
 
     private ImageButton mConversation;
     private ImageButton mPlugin;
     private ImageButton mContact;
 
-    private FragmentManager fragmentManager;
+    private android.support.v4.app.FragmentManager fragmentManager;
 
     private Fragment activeFragment = null;
     private Fragment mConversationFragment = null;
@@ -111,7 +110,7 @@ public class HomeActivity extends Activity implements OnClickListener{
 
     private void initDefaultFragment(){
 
-        fragmentManager = getFragmentManager();
+        fragmentManager = getSupportFragmentManager();
         setTabSelection(R.id.home_conversation_button);
     }
 
