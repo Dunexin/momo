@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    >
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:id="@+id/dialogue_item_friend_image"
+        android:src="@drawable/me"/>
+
+   <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dialogue_item_friend_text_view"
+        android:background="@drawable/aio_friend_bubble_selector"
+        android:textSize="15sp"
+        android:text="黑河hkj发撒的发"
+        android:maxWidth="270dp"
+        android:textColor="@color/black"
+       android:layout_toRightOf="@+id/dialogue_item_friend_image"/>
+</RelativeLayout>

@@ -11,13 +11,15 @@
         android:id="@+id/chat_room_top_bar_layout"
         android:layout_width="wrap_content"/>
 
-    <ListView
+
+    <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:id="@+id/chat_room_dialogue"
         android:layout_below="@+id/chat_room_top_bar_layout"
         android:layout_above="@+id/chat_room_bottom_bar_input_layout">
 
-        </ListView>
+        </RelativeLayout>
 
     <include
         layout="@layout/chat_room_bottom_bar_input"
