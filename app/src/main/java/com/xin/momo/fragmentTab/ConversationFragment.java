@@ -1,8 +1,11 @@
 package com.xin.momo.fragmentTab;
 
 
-import android.support.v4.app.Fragment;
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +15,7 @@ import android.widget.ListView;
 import com.xin.momo.Adapter.ConversationAdapter;
 import com.xin.momo.Adapter.ConversationData;
 import com.xin.momo.Adapter.ConversationDataList;
+import com.xin.momo.ChatRoomActivity;
 import com.xin.momo.R;
 import com.xin.momo.utils.L;
 
@@ -21,7 +25,12 @@ import com.xin.momo.utils.L;
  * create an instance of this fragment.
  *
  */
-public class ConversationFragment extends Fragment {
+public class ConversationFragment extends Fragment implements AdapterView.OnItemClickListener{
+
+    private OnConversationFragmentInteractionListener mListener;
+    private ListView mListView = null;
+    private Intent chatRoom;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -68,26 +77,9 @@ public class ConversationFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mListView = (ListView) getActivity().findViewById(R.id.conversation_list_view);
         ConversationDataList conversationDataList = new ConversationDataList();
-        conversationDataList.addConversationData(new ConversationData("今天天气真啊好哦", "10:20", "愤怒的小明", null));
-        conversationDataList.addConversationData(new ConversationData("今天天气真啊好哦", "10:24", "愤怒的小明", null));
-        conversationDataList.addConversationData(new ConversationData("今天天气真啊好哦", "10:23", "愤怒的小明", null));
-
-        conversationDataList.addConversationData(new ConversationData("今天天气真啊好哦", "10:20", "愤怒的小明", null));
-        conversationDataList.addConversationData(new ConversationData("今天天气真啊好哦", "10:24", "愤怒的小明", null));
-        conversationDataList.addConversationData(new ConversationData("今天天气真啊好哦", "10:23", "愤怒的小明", null));
-        conversationDataList.addConversationData(new ConversationData("今天天气真啊好哦", "10:20", "愤怒的小明", null));
-        conversationDataList.addConversationData(new ConversationData("今天天气真啊好哦", "10:20", "愤怒的小明", null));
-        conversationDataList.addConversationData(new ConversationData("今天天气真啊好哦", "10:24", "愤怒的小明", null));
-        conversationDataList.addConversationData(new ConversationData("今天天气真啊好哦", "10:23", "愤怒的小明", null));
-        conversationDataList.addConversationData(new ConversationData("今天天气真啊好哦", "10:24", "愤怒的小明", null));
-        conversationDataList.addConversationData(new ConversationData("今天天气真啊好哦", "10:23", "愤怒的小明", null));
+        conversationDataList.addConversationData(new ConversationData("312", "3123", "3213", null));
         mListView.setAdapter(new ConversationAdapter(getActivity(), conversationDataList));
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                L.i(position + "  " + id);
-            }
-        });
+        mListView.setOnItemClickListener(this);
     }
 
     @Override
@@ -98,5 +90,33 @@ public class ConversationFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_conversation, container, false);
     }
 
-    private ListView mListView = null;
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mListener = (OnConversationFragmentInteractionListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    /*
+     * listView on item  click listener
+     */
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        chatRoom = new Intent(getActivity(), ChatRoomActivity.class);
+        startActivity(chatRoom);
+    }
+
+
+    /*
+     * Conversation Fragment callback interface
+     */
+    public interface OnConversationFragmentInteractionListener {
+
+        public void onConversationFragmentInteraction(Uri uri);
+    }
 }

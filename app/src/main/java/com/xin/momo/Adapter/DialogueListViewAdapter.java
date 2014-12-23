@@ -1,13 +1,13 @@
 package com.xin.momo.Adapter;
 
 import android.content.Context;
+import android.text.SpannableStringBuilder;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.xin.momo.R;
-import com.xin.momo.utils.L;
 
 /**
  * Created by Administrator on 2014/12/16.
@@ -55,7 +55,7 @@ public class DialogueListViewAdapter extends BaseAdapter{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        L.i("position id --" + position);
+//        L.i("position id --" + position);
         ViewHolder viewHolder;
         DialogueMessage message = mList.getDialogueMessage(position);
         TextView mText;
@@ -75,7 +75,7 @@ public class DialogueListViewAdapter extends BaseAdapter{
 
             case DialogueMessage.MESSAGE_CONTENT_TYPE_STRING:
                 mText = (TextView)viewHolder.getView(WHAT_TEXT_ID[message.getType()]);
-                mText.setText(message.getMsg().toString());
+                mText.setText((SpannableStringBuilder)message.getMsg());
                 break;
             default:
                 break;

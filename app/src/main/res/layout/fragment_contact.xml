@@ -4,10 +4,41 @@
     android:layout_height="match_parent"
     tools:context="com.xin.momo.fragmentTab.ContactFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <include
+        layout="@layout/home_contact_top_bar"
+        android:id="@+id/home_contact_top_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/activity_custom_action_bar_height"
+        android:layout_alignParentTop="true"/>
+
+    <include
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        layout="@layout/contact_entry_layout"
+        android:layout_below="@+id/home_contact_top_bar"
+        android:id="@+id/home_contact_entry"
+        />
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="contact" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:textColor="@color/silver"
+        android:layout_below="@+id/home_contact_entry"
+        android:id="@+id/friend_group_tv"
+        android:text="好友分组"
+        />
+    <ExpandableListView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:dividerHeight="1dp"
+        android:groupIndicator="@drawable/expandable_list_view_group_indicator"
+        android:childDivider="@color/dividing_line_color"
+        android:listSelector="@drawable/list_view_default_selector"
+        android:divider="@color/dividing_line_color"
+        android:id="@+id/contact_expandable_list_view"
+        android:layout_below="@+id/friend_group_tv"
+        >
+
+        </ExpandableListView>
 
 </RelativeLayout>

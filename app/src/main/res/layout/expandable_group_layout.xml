@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="center_vertical"
+    android:layout_width="fill_parent"
+    android:paddingLeft="@dimen/expandable_padding_left_right"
+    android:paddingRight="@dimen/expandable_padding_left_right"
+    android:layout_height="@dimen/expandable_group_height">
+
+    <ImageView
+        android:layout_width="@dimen/indicator_select"
+        android:layout_height="@dimen/indicator_select"
+        android:layout_centerVertical="true"
+        android:id="@+id/expandable_group_select"
+        android:layout_marginRight="15dp"
+        android:src="@drawable/skin_indicator_unexpanded"/>
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:layout_centerVertical="true"
+        android:id="@+id/expandable_group_name"
+        android:textColor="@color/black"
+        android:text="哈哈哈哈"
+        android:textSize="20sp"
+        android:layout_toRightOf="@+id/expandable_group_select"
+        android:layout_toLeftOf="@+id/expandable_group_count" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/silver"
+        android:id="@+id/expandable_group_count"
+        android:text="0/1"
+        android:textSize="13sp"
+        />
+</RelativeLayout>

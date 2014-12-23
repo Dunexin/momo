@@ -15,17 +15,19 @@ public class FaceGridViewAdapter extends BaseAdapter{
     private Context mContext;
     private int page;
     private int []mImageId;
-    static private int paceFaceCount = 21;
+    private int faceCount;
 
-    public FaceGridViewAdapter(Context context, int page, int []imageId){
+
+    public FaceGridViewAdapter(Context context, int page, int []imageDrawable){
 
         this.page = page;
-        this.mImageId = imageId;
+        this.faceCount = 20;
+        this.mImageId = imageDrawable;
         this.mContext = context;
     }
     @Override
     public int getCount() {
-        return paceFaceCount;
+        return faceCount + 1;
     }
 
     @Override
@@ -35,20 +37,25 @@ public class FaceGridViewAdapter extends BaseAdapter{
 
     @Override
     public long getItemId(int position) {
-        if(position == 20){
+        if(position == faceCount){
 
             return R.drawable.goi;
         }
-        return position + (paceFaceCount - 1) * page;
+        return position + (faceCount) * page;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder mViewHolder = new ViewHolder(mContext, parent, R.layout.grid_view_item, position);
+        ViewHolder mViewHolder = ViewHolder.get(mContext, convertView, parent, R.layout.grid_view_item, position);
         ImageView mImageView =  mViewHolder.getView(R.id.face_grid_item);
 
-        if(position < 20){
-            mImageView.setImageResource(mImageId[page * (paceFaceCount - 1) + position]);
+        if(position < faceCount){
+//            mImageView.setImageDrawable(null);
+
+            int id = page * faceCount + position;
+            mImageView.setImageResource(mImageId[id]);
+//            L.i("image id " + id);
+//            mImageView.setImageDrawable(mImageId[page * (faceCount) + position]);
         }
         else{
             mImageView.setImageResource(R.drawable.goi);
@@ -56,4 +63,5 @@ public class FaceGridViewAdapter extends BaseAdapter{
 
         return mViewHolder.getConvertView();
     }
+
 }

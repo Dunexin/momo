@@ -1,17 +1,15 @@
 package com.xin.momo.Adapter;
 
-import android.os.Message;
-
 /**
- * Created by Administrator on 2014/12/16.
+ * Created by xin on 2014/12/16.
  */
 public class DialogueMessage {
 
     public static final  int DIALOGUE_MESSAGE_TYPE_USER = 0;
     public static final  int DIALOGUE_MESSAGE_TYPE_FRIEND = 1;
 
-    static final int MESSAGE_CONTENT_TYPE_STRING = 0;
-    static final int MESSAGE_CONTENT_TYPE_IMAGE = 1;
+    public static final int MESSAGE_CONTENT_TYPE_STRING = 0;
+    public static final int MESSAGE_CONTENT_TYPE_IMAGE = 1;
 
     static private int typeCount = 2;
     private int type;
@@ -23,6 +21,10 @@ public class DialogueMessage {
     }
 
 
+    static public DialogueMessage getInstance(int type, Object msg){
+
+        return new DialogueMessage(type, msg);
+    }
     public DialogueMessage(int type, Object msg) {
 
         this.type = type;
@@ -50,7 +52,7 @@ public class DialogueMessage {
         return msg;
     }
 
-    public void setMsg(Message msg) {
+    public void setMsg(Object msg) {
         this.msg = msg;
     }
 

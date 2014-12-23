@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -37,8 +36,7 @@ public class ChatRoomActivity extends FragmentActivity implements
     private ImageView mFaceButton;
     private Button mSendInfoBtn;
     private ImageView mSendVoiceBtn;
-    private LinearLayout mSendInfoLayout;
-    private LinearLayout mSendVoiceLayout;
+    private LinearLayout mChatRoomBack;
     private boolean faceLayoutExpanded = false;
     private RelativeLayout mFaceLayout;
     private LinearLayout mSendBtnLayout;
@@ -51,6 +49,7 @@ public class ChatRoomActivity extends FragmentActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_room);
 
+        L.i("chat Room create");
         initWidget();
         chatRoomDialogueFragment = new ChatRoomDialogueFragment();
         getSupportFragmentManager().beginTransaction().
@@ -58,8 +57,6 @@ public class ChatRoomActivity extends FragmentActivity implements
                         "CHAT_ROOM_DIALOGUE_FRAGMENT").
                 commit();
     }
-
-
 
     @Override
     public void onClick(View v) {
@@ -69,16 +66,30 @@ public class ChatRoomActivity extends FragmentActivity implements
                 L.i("more image_btn");
                 break;
             case R.id.chat_root_bar_qz_icon_face_imageView:
-                setFaceLayoutExpandState(faceLayoutExpanded);
-                faceLayoutExpanded = !faceLayoutExpanded;
+                if(mFaceFragment == null){
+                    mFaceFragment = new ChatRoomFaceFragment();
+                    getSupportFragmentManager().beginTransaction()
+                            .add(R.id.chat_room_bottom_bar_face_layout, mFaceFragment,
+                                    "CHAT_ROOM_FACE_FRAGMENT")
+                            .commit();
+                }
+                else{
+
+                    if(mFaceFragment.isVisible()) {
+                        setFaceLayoutExpandState(faceLayoutExpanded);
+                        faceLayoutExpanded = !faceLayoutExpanded;
+                    }
+                }
                 break;
-            case R.id.char_room_send_button_voice:
+            case R.id.chat_room_send_button_voice:
                 break;
-            case R.id.char_room_send_button_info:
-                L.i("send message " + mEditText.getText() );
+            case R.id.chat_room_send_button_info:
                 chatRoomDialogueFragment.sendMessageToFragment(
-                        new DialogueMessage(DialogueMessage.DIALOGUE_MESSAGE_TYPE_USER, mEditText.getText()));
+                        DialogueMessage.getInstance(DialogueMessage.DIALOGUE_MESSAGE_TYPE_USER, mEditText.getText()));
                 mEditText.setText("");
+                break;
+            case R.id.chat_room_back:
+                finish();
                 break;
             default:
                 break;
@@ -86,39 +97,8 @@ public class ChatRoomActivity extends FragmentActivity implements
     }
 
 
-    private void initWidget(){
-
-        mSendVoiceLayout = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.send_button_voice, null);
-        mSendVoiceBtn = (ImageView) mSendVoiceLayout.findViewById(R.id.char_room_send_button_voice);
-
-        mSendInfoLayout = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.send_button_info, null);
-        mSendInfoBtn = (Button) mSendInfoLayout.findViewById(R.id.char_room_send_button_info);
-
-        mSendBtnLayout = (LinearLayout) findViewById(R.id.chat_room_send_button_layout);
-        mSendBtnLayout.addView(mSendVoiceLayout);
-
-        mMoreImageView = (ImageView) findViewById(R.id.chat_room_bar_more_imageView);
-        mFaceButton = (ImageView) findViewById(R.id.chat_root_bar_qz_icon_face_imageView);
-        mFaceLayout = (RelativeLayout) findViewById(R.id.chat_room_bottom_bar_face_layout);
-
-        mEditText = (CustomEditTextView) findViewById(R.id.chat_room_bar_edit_text);
-        mEditText.addTextChangedListener(new EditTextTextWatcher());
-
-        mFaceButton.setOnClickListener(this);
-        mMoreImageView.setOnClickListener(this);
-        mSendVoiceBtn.setOnClickListener(this);
-        mSendInfoBtn.setOnClickListener(this);
-
-    }
 
     private void setFaceLayoutExpandState(boolean isExpand){
-        if(mFaceFragment == null){
-            mFaceFragment = new ChatRoomFaceFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.chat_room_bottom_bar_face_layout, mFaceFragment,
-                            "CHAT_ROOM_FACE_FRAGMENT")
-                    .commit();
-        }
         if(isExpand){
 
             ViewGroup.LayoutParams params = mFaceLayout.getLayoutParams();
@@ -146,6 +126,10 @@ public class ChatRoomActivity extends FragmentActivity implements
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+        if(mFaceFragment.isVisible()) {
+            setFaceLayoutExpandState(faceLayoutExpanded);
+            faceLayoutExpanded = !faceLayoutExpanded;
+        }
     }
 
     @Override
@@ -170,6 +154,9 @@ public class ChatRoomActivity extends FragmentActivity implements
     }
 
 
+    /*
+     * EditText Watcher listener
+     */
     class EditTextTextWatcher implements TextWatcher{
 
         @Override
@@ -187,17 +174,45 @@ public class ChatRoomActivity extends FragmentActivity implements
         @Override
         public void afterTextChanged(Editable s) {
 
-            L.i("afterText " + s.length());
+//            L.i("afterText " + s.length());
             if(s.length() == 0 && isActiveInfo){
-                mSendBtnLayout.removeView(mSendInfoLayout);
-                mSendBtnLayout.addView(mSendVoiceLayout);
+                mSendBtnLayout.removeView(mSendInfoBtn);
+                mSendBtnLayout.addView(mSendVoiceBtn);
                 isActiveInfo = false;
             }
             else if(!isActiveInfo){
-                mSendBtnLayout.removeView(mSendVoiceLayout);
-                mSendBtnLayout.addView(mSendInfoLayout);
+                mSendBtnLayout.removeView(mSendVoiceBtn);
+                mSendBtnLayout.addView(mSendInfoBtn);
                 isActiveInfo = true;
             }
         }
+    }
+
+    private void initWidget(){
+
+        mSendVoiceBtn = (ImageView) View.inflate(this, R.layout.send_button_voice, null)
+                .findViewById(R.id.chat_room_send_button_voice);
+
+        mSendInfoBtn = (Button)  View.inflate(this, R.layout.send_button_info, null)
+                .findViewById(R.id.chat_room_send_button_info);
+
+        mSendBtnLayout = (LinearLayout) findViewById(R.id.chat_room_send_button_layout);
+        mSendBtnLayout.addView(mSendVoiceBtn);
+
+        mMoreImageView = (ImageView) findViewById(R.id.chat_room_bar_more_imageView);
+        mFaceButton = (ImageView) findViewById(R.id.chat_root_bar_qz_icon_face_imageView);
+        mFaceLayout = (RelativeLayout) findViewById(R.id.chat_room_bottom_bar_face_layout);
+
+        mEditText = (CustomEditTextView) findViewById(R.id.chat_room_bar_edit_text);
+        mEditText.addTextChangedListener(new EditTextTextWatcher());
+
+        mChatRoomBack = (LinearLayout) findViewById(R.id.chat_room_back);
+
+        mChatRoomBack.setOnClickListener(this);
+        mFaceButton.setOnClickListener(this);
+        mMoreImageView.setOnClickListener(this);
+        mSendVoiceBtn.setOnClickListener(this);
+        mSendInfoBtn.setOnClickListener(this);
+
     }
 }

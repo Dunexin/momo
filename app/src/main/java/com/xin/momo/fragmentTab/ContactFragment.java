@@ -3,11 +3,14 @@ package com.xin.momo.fragmentTab;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ExpandableListView;
 
+import com.xin.momo.Adapter.ExpandableListViewAdapter;
 import com.xin.momo.R;
 import com.xin.momo.utils.L;
 
@@ -65,6 +68,13 @@ public class ContactFragment extends Fragment {
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        initWidget();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -72,4 +82,11 @@ public class ContactFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_contact, container, false);
     }
 
+    private void initWidget(){
+
+        mExpandableListView = (ExpandableListView) getActivity().findViewById(R.id.contact_expandable_list_view);
+        mExpandableListView.setAdapter(new ExpandableListViewAdapter(getActivity()));
+    }
+
+    private ExpandableListView mExpandableListView;
 }

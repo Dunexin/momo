@@ -1,18 +1,32 @@
 package com.xin.momo.fragmentTab;
 
 import android.app.Activity;
-import android.support.v4.app.Fragment;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.support.v4.app.Fragment;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.xin.Application.DataApplication;
 import com.xin.momo.Adapter.DialogueDataList;
 import com.xin.momo.Adapter.DialogueListViewAdapter;
 import com.xin.momo.Adapter.DialogueMessage;
 import com.xin.momo.R;
+
+import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +41,9 @@ public class ChatRoomDialogueFragment extends Fragment {
     private ListView mListView = null;
     private DialogueDataList mList;
     private DialogueListViewAdapter mAdapter;
+    private Pattern mDialoguePattern;
+    private Handler mHandler;
+    private Handler mThreadHandler;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -94,25 +111,78 @@ public class ChatRoomDialogueFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        new DialogueChatThread().start();
         initWidget();
     }
 
     private void initWidget(){
 
+        mHandler = new Handler();
         mList = new DialogueDataList();
         mListView = (ListView) getActivity().findViewById(R.id.chat_room_dialogue_list_view);
         mAdapter = new DialogueListViewAdapter(getActivity(), mList);
         mListView.setAdapter(mAdapter);
     }
 
-    public void sendMessageToFragment(DialogueMessage dialogueMessage){
+    private void initDialoguePattern(){
 
-        mList.addDialogueMessage(dialogueMessage);
-        mAdapter.notifyDataSetChanged();
+        StringBuilder s = new StringBuilder();
+        String faceWord[] = ((DataApplication)getActivity().getApplication()).getFaceWord();
+        for(String word : faceWord){
+
+            s.append(word).append("|") ;
+        }
+        s.delete(s.length() - 1, s.length());
+        mDialoguePattern = Pattern.compile(String.valueOf(s));
+    }
+    public void sendMessageToFragment(DialogueMessage mDialogueMessage){
+
+        final DialogueMessage dialogueMessage = mDialogueMessage;
+       mThreadHandler.sendMessage(mThreadHandler.obtainMessage(1, dialogueMessage));
     }
     public interface OnDialogueFragmentInteractionListener {
 
         public void onDialogueFragmentInteraction(Uri uri);
     }
 
+    class DialogueChatThread extends Thread {
+
+
+        private HashMap<String, Integer> faceMap;
+
+        public void run() {
+            initDialoguePattern();
+
+            faceMap = ((DataApplication)getActivity().getApplication()).getFaceMap();
+            Looper.prepare();
+            mThreadHandler = new Handler() {
+
+                public void handleMessage(Message msg) {
+
+                    DialogueMessage dialogueMessage = (DialogueMessage)msg.obj;
+
+                    if(dialogueMessage.getType() == DialogueMessage.MESSAGE_CONTENT_TYPE_STRING){
+                        String chatMsg = dialogueMessage.getMsg().toString();
+                        Matcher matcher = mDialoguePattern.matcher(chatMsg);
+                        SpannableStringBuilder builder = new SpannableStringBuilder(chatMsg);
+                        while(matcher.find()){
+                            Bitmap faceBitmap = BitmapFactory.decodeResource(getResources(), faceMap.get(matcher.group()));
+                            faceBitmap = ThumbnailUtils.extractThumbnail(faceBitmap, 55, 55);
+                            builder.setSpan(new ImageSpan(getActivity(), faceBitmap),
+                                    matcher.start(), matcher.end(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        }
+                        dialogueMessage.setMsg(builder);
+                    }
+                    mList.addDialogueMessage(dialogueMessage);
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    });
+                }
+            };
+            Looper.loop();
+        }
+    }
 }

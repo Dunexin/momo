@@ -1,12 +1,13 @@
 package com.xin.momo.Adapter;
 
 import android.app.Activity;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import com.xin.Application.DataApplication;
 import com.xin.momo.R;
-import com.xin.momo.utils.L;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,8 @@ public class FacePagerData implements AdapterView.OnItemClickListener{
 
     private Activity mActivity;
     private List<View> mListData;
-    private int []ImageId;
+    private Drawable []imageDrawable;
+    private int ImageId[];
     private int faceCount;
     private int page;
     private OnGridViewItemListener mOnGridViewItemListener;
@@ -29,9 +31,9 @@ public class FacePagerData implements AdapterView.OnItemClickListener{
         faceCount = 100;
         mActivity = activity;
         page = faceCount / 20;
+
         initImageId();
-        initDefaultView();
-        L.i("Face page " + String.valueOf(mListData.size()));
+//        initDefaultView();
     }
 
     public int getCount(){
@@ -69,26 +71,13 @@ public class FacePagerData implements AdapterView.OnItemClickListener{
         mGridView.setNumColumns(7);
         mListData.add(mView);
     }
-    private void initPoint(){
-
-    }
     public List<View> getListPager(){
 
         return mListData;
     }
     private void initImageId(){
 
-        ImageId = new int[120];
-        for(int i = 0; i < 105; i ++){
-            try {
-                ImageId[i] = Integer.parseInt(R.drawable.class.getDeclaredField("smiley_" + i)
-                        .get(null).toString());
-            } catch (NoSuchFieldException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        }
+        ImageId = ((DataApplication)mActivity.getApplication()).getFaceIdArray();
     }
 
     public void setOnGridViewItemListener(OnGridViewItemListener onGridViewItemListener){

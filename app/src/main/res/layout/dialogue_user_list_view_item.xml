@@ -23,7 +23,6 @@
         android:id="@+id/dialogue_item_user_text_view"
         android:background="@drawable/aio_user_bubble_selector"
         android:textSize="15sp"
-        android:text="黑河hkj发撒的发"
         android:maxWidth="270dp"
         android:textColor="@color/white"
         />

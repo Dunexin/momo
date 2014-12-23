@@ -1,8 +1,10 @@
 package com.xin.momo;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,14 +16,13 @@ import com.xin.momo.fragmentTab.ContactFragment;
 import com.xin.momo.fragmentTab.ConversationFragment;
 import com.xin.momo.fragmentTab.PluginFragment;
 
-public class HomeActivity extends FragmentActivity implements OnClickListener{
+public class HomeActivity extends FragmentActivity implements OnClickListener,
+        ConversationFragment.OnConversationFragmentInteractionListener{
 
     private ImageButton mConversation;
     private ImageButton mPlugin;
     private ImageButton mContact;
-
-    private android.support.v4.app.FragmentManager fragmentManager;
-
+    private FragmentManager fragmentManager;
     private Fragment activeFragment = null;
     private Fragment mConversationFragment = null;
     private Fragment mPluginFragment = null;
@@ -139,5 +140,13 @@ public class HomeActivity extends FragmentActivity implements OnClickListener{
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         return super.onOptionsItemSelected(item);
+    }
+
+    /*
+     * Conversation Fragment callback
+     */
+    @Override
+    public void onConversationFragmentInteraction(Uri uri) {
+
     }
 }

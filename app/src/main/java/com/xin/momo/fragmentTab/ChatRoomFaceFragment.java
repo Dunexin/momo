@@ -3,6 +3,9 @@ package com.xin.momo.fragmentTab;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -11,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
+import com.xin.Application.DataApplication;
 import com.xin.momo.Adapter.FacePagerAdapter;
 import com.xin.momo.Adapter.FacePagerData;
 import com.xin.momo.FacePointSelect;
@@ -31,6 +35,8 @@ public class ChatRoomFaceFragment extends Fragment {
     private FacePagerData mFacePagerData;
     private String []faceWord;
     private FacePointSelect facePointSelect;
+    private Handler mHandler;
+    private Handler mThreadHandler;
 
 
     public ChatRoomFaceFragment() {
@@ -76,6 +82,9 @@ public class ChatRoomFaceFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        mHandler = new Handler();
+        new FaceThread().start();
+        mListener.onFragmentInteraction(null);
         initWidget();
     }
 
@@ -84,23 +93,25 @@ public class ChatRoomFaceFragment extends Fragment {
         initFaceWord();
 
         mViewPager = (ViewPager) getActivity().findViewById(R.id.face_view_pager);
+
         mFacePagerData = new FacePagerData(getActivity());
-        mFacePagerData.setOnGridViewItemListener(new OnGridViewItemListener());
         mViewPager.setAdapter(new FacePagerAdapter(mFacePagerData, getActivity()));
+        mViewPager.setOffscreenPageLimit(1);
+        facePointSelect = new FacePointSelect(getActivity(), mViewPager.getAdapter().getCount());
+        mFacePagerData.setOnGridViewItemListener(new OnGridViewItemListener());
         mViewPager.setOnPageChangeListener(new FacePageOnPageChangeListener());
         mViewPager.setCurrentItem(0);
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
 
-        facePointSelect = new FacePointSelect(getActivity(), mViewPager.getAdapter().getCount());
+            }
+        });
     }
 
     private void initFaceWord(){
-        new Thread(){
 
-            @Override
-            public void run() {
-                faceWord = getActivity().getResources().getStringArray(R.array.face_word);
-            }
-        }.start();
+        faceWord = ((DataApplication)getActivity().getApplication()).getFaceWord();
     }
 
 
@@ -144,7 +155,7 @@ public class ChatRoomFaceFragment extends Fragment {
         @Override
         public void onGridViewItemClick(long itemId, long resource) {
 
-            L.i("Face id " + String.valueOf(itemId));
+//            L.i("Face id " + String.valueOf(itemId));
             if (faceWord != null) {
                 mListener.FaceInput(itemId, faceWord[((int) itemId)], resource);
             }
@@ -154,6 +165,22 @@ public class ChatRoomFaceFragment extends Fragment {
         public void onDeleteButtonClick(AdapterView<?> parent, View view, int position, long id) {
 
             mListener.FaceFragmentDeleteEven(parent, view, position, id);
+        }
+    }
+
+    class FaceThread extends Thread {
+
+        public void run() {
+
+            Looper.prepare();
+            mThreadHandler = new Handler() {
+
+                public void handleMessage(Message msg) {
+
+                }
+            };
+
+            Looper.loop();
         }
     }
 }

@@ -14,5 +14,12 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="CONVERSATION_TAG">CONVERSATION</string>
     <string name="title_activity_chat_room">ChatRoomActivity</string>
+    <string name="contact_people">联系人</string>
+    <string name="contact_add">添加</string>
+    <string name="search_word">搜索</string>
+    <string name="contact_discussion_str">人脉圈</string>
+    <string name="contact_phone_str">通讯录</string>
+    <string name="contact_troop_str">群组</string>
+    <string name="contact_pbaccount_str">生活服务</string>
 
 </resources>

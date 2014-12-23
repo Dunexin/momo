@@ -22,7 +22,6 @@
         android:id="@+id/dialogue_item_friend_text_view"
         android:background="@drawable/aio_friend_bubble_selector"
         android:textSize="15sp"
-        android:text="黑河hkj发撒的发"
         android:maxWidth="270dp"
         android:textColor="@color/black"
        android:layout_toRightOf="@+id/dialogue_item_friend_image"/>

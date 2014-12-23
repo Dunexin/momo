@@ -2,8 +2,8 @@
 
 <RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="67dp"
-    android:paddingLeft="10dp"
+    android:layout_height="55dp"
+    android:paddingLeft="5dp"
     android:paddingTop="5dp"
     android:paddingBottom="5dp"
     android:paddingRight="10dp">
@@ -11,19 +11,18 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="10dp"
-        android:id="@+id/conversation_item_head_image"
+        android:id="@+id/expandable_group_child_head_image"
         android:src="@drawable/gco"/>
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_alignParentBottom="true"
         android:orientation="vertical"
-        android:layout_toEndOf="@+id/conversation_item_head_image">
+        android:layout_toEndOf="@+id/expandable_group_child_head_image">
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="33.5dp"
-            >
+            android:layout_height="27.5dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
@@ -33,27 +32,26 @@
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:gravity="center_vertical"
-                android:layout_toLeftOf="@+id/conversation_chat_data_time_textView"
-                android:layout_toStartOf="@+id/conversation_chat_data_time_textView" />
-            <TextView
-                android:layout_width="50dp"
+                android:layout_toLeftOf="@+id/expandable_group_child_call"/>
+            <ImageView
+                android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:textColor="#FF7D7D7D"
+                android:src="@drawable/qq_contacts_network_2g"
                 android:layout_alignParentRight="true"
-                android:text="10:35"
                 android:gravity="center"
-                android:id="@+id/conversation_chat_data_time_textView"
+                android:id="@+id/expandable_group_child_call"
                 />
-            </RelativeLayout>
+        </RelativeLayout>
 
         <TextView
             android:layout_width="fill_parent"
-            android:layout_height="23.5dp"
+            android:layout_height="17.5dp"
             android:singleLine="true"
             android:gravity="center_vertical"
-            android:id="@+id/conversation_chat_abstract"
+            android:id="@+id/expandable_group_child_chat_abstract"
             android:ellipsize="end"
             android:textColor="#FF7D7D7D"
-            android:textSize="16sp"/>
-        </LinearLayout>
+            android:text="[在线]"
+            android:textSize="15sp"/>
+    </LinearLayout>
 </RelativeLayout>

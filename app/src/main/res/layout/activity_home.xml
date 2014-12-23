@@ -4,12 +4,6 @@
     android:layout_height="fill_parent"
     tools:context="com.xin.momo.HomeActivity">
 
-    <include
-        layout="@layout/home_top_bar"
-        android:id="@+id/home_top_bar"
-        android:layout_width="fill_parent"
-        android:layout_height="@dimen/activity_custom_action_bar_height"
-        android:layout_alignParentTop="true"/>
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
