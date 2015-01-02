@@ -8,7 +8,7 @@
         layout="@layout/home_contact_top_bar"
         android:id="@+id/home_contact_top_bar"
         android:layout_width="fill_parent"
-        android:layout_height="@dimen/activity_custom_action_bar_height"
+        android:layout_height="@dimen/abc_action_bar_stacked_max_height"
         android:layout_alignParentTop="true"/>
 
     <include

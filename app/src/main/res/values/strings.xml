@@ -21,5 +21,18 @@
     <string name="contact_phone_str">通讯录</string>
     <string name="contact_troop_str">群组</string>
     <string name="contact_pbaccount_str">生活服务</string>
+    <string name="login_setting">高级设置</string>
+    <string name="login_page_sign_up">新用户</string>
+    <string name="title_activity_login_setting_acitvity">LoginSettingAcitvity</string>
+    <string name="back">返回</string>
+    <string name="server_ip_hint">Server IP</string>
+    <string name="login_setting_finish">确定</string>
+    <string name="back_key_Confirmation">再按一次退出程序</string>
+    <string name="title_activity_core_service">CoreServiceActivity</string>
+    <string name="user_account_empty">用户名不能为空</string>
+    <string name="user_passCode_empty">密码不能为空</string>
+    <string name="user_account_passCode_error">用户名和密码不匹配</string>
+    <string name="unable_connect_server_error">无法连接服务器</string>
+    <string name="unable_connect_server_error_check">无法连接服务器, 请检查网络</string>
 
 </resources>

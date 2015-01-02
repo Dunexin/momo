@@ -27,7 +27,9 @@ public class ChatRoomActivity extends FragmentActivity implements
         View.OnClickListener, ChatRoomFaceFragment.OnFaceFragmentInteractionListener,
         ChatRoomDialogueFragment.OnDialogueFragmentInteractionListener{
 
+    public final static String CHAT_ROOM_ACTIVE_USER_NAME = "CHAT_ROOM_ACTIVE_USER_NAME";
     private static final int face_layout_height = 300;
+
 
     private ChatRoomFaceFragment mChatRoomFaceFragment;
     private ChatRoomDialogueFragment chatRoomDialogueFragment;
@@ -49,6 +51,7 @@ public class ChatRoomActivity extends FragmentActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_room);
 
+        L.i(getIntent().getStringExtra(CHAT_ROOM_ACTIVE_USER_NAME));
         L.i("chat Room create");
         initWidget();
         chatRoomDialogueFragment = new ChatRoomDialogueFragment();

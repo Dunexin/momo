@@ -15,4 +15,5 @@
     <dimen name="indicator_select">20dp</dimen>
     <dimen name="expandable_padding_left_right">15dp</dimen>
     <dimen name="expandable_group_height">40dp</dimen>
+    <dimen name="home_bottom_bar_image">65dp</dimen>
 </resources>

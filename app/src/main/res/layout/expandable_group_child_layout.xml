@@ -11,6 +11,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="-10dp"
         android:id="@+id/expandable_group_child_head_image"
         android:src="@drawable/gco"/>
     <LinearLayout
@@ -26,7 +27,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:id="@+id/conversation_friend_name_textView"
+                android:id="@+id/contact_friend_name_textView"
                 android:layout_alignParentLeft="true"
                 android:text="宝贝"
                 android:textColor="@color/black"
@@ -34,8 +35,8 @@
                 android:gravity="center_vertical"
                 android:layout_toLeftOf="@+id/expandable_group_child_call"/>
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:src="@drawable/qq_contacts_network_2g"
                 android:layout_alignParentRight="true"
                 android:gravity="center"
@@ -48,10 +49,9 @@
             android:layout_height="17.5dp"
             android:singleLine="true"
             android:gravity="center_vertical"
-            android:id="@+id/expandable_group_child_chat_abstract"
+            android:id="@+id/contact_expandable_group_child_chat_abstract"
             android:ellipsize="end"
             android:textColor="#FF7D7D7D"
-            android:text="[在线]"
             android:textSize="15sp"/>
     </LinearLayout>
 </RelativeLayout>

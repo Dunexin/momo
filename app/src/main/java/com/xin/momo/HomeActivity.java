@@ -1,24 +1,25 @@
 package com.xin.momo;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 
+import com.xin.momo.ActivityCallBack.HomeActivityCallBack;
 import com.xin.momo.fragmentTab.ContactFragment;
 import com.xin.momo.fragmentTab.ConversationFragment;
 import com.xin.momo.fragmentTab.PluginFragment;
 
-public class HomeActivity extends FragmentActivity implements OnClickListener,
-        ConversationFragment.OnConversationFragmentInteractionListener{
+public class HomeActivity extends BindCoreServiceFragmentActivity implements OnClickListener,
+        ConversationFragment.OnConversationFragmentInteractionListener,
+        ContactFragment.OnContactFragmentInteractionListener{
 
+    public final static String ACTIVITY_TAG = "HOME_ACTIVITY";
     private ImageButton mConversation;
     private ImageButton mPlugin;
     private ImageButton mContact;
@@ -54,6 +55,22 @@ public class HomeActivity extends FragmentActivity implements OnClickListener,
             default:
                 break;
         }
+    }
+
+    @Override
+    public void bindServiceFinish() {
+
+        getCoreService().setActivityCallBack(HomeActivity.ACTIVITY_TAG, new HomeActivityCallBack() {
+
+            @Override
+            public void setContactToFragment() {
+            }
+
+            @Override
+            public void expandableListUpdate() {
+                ((ContactFragment)mContactFragment).updateExpandableListView();
+            }
+        });
     }
 
     private void setTabSelection(int id){
@@ -126,20 +143,14 @@ public class HomeActivity extends FragmentActivity implements OnClickListener,
         mPlugin.setOnClickListener(this);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
-        return true;
-    }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        return super.onOptionsItemSelected(item);
+    public void onBackPressed() {
+
+        Intent i= new Intent(Intent.ACTION_MAIN);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.addCategory(Intent.CATEGORY_HOME);
+        startActivity(i);
     }
 
     /*
@@ -148,5 +159,11 @@ public class HomeActivity extends FragmentActivity implements OnClickListener,
     @Override
     public void onConversationFragmentInteraction(Uri uri) {
 
+    }
+
+    @Override
+    public void ContactFragmentCreated() {
+
+        ((ContactFragment)mContactFragment).initExpandableListView(getCoreService().getContactListData());
     }
 }

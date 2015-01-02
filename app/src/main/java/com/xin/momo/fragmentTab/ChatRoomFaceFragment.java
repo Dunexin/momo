@@ -83,7 +83,7 @@ public class ChatRoomFaceFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mHandler = new Handler();
-        new FaceThread().start();
+//        new FaceThread().start();
         mListener.onFragmentInteraction(null);
         initWidget();
     }

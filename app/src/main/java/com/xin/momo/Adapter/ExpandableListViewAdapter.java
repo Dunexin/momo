@@ -5,9 +5,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.xin.momo.R;
-import com.xin.momo.utils.L;
 
 /**
  * Created by Administrator on 2014/12/23.
@@ -16,18 +16,22 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 
     private static final int [] GROUP_STATE_SETS = {R.drawable.skin_indicator_unexpanded, R.drawable.skin_indicator_expanded};
     private Context mContext;
-    public ExpandableListViewAdapter(Context context){
+    private ExpandableList mExpandableList;
+    public ExpandableListViewAdapter(Context context, ExpandableList expandableList){
 
         mContext = context;
+        mExpandableList = expandableList;
     }
     @Override
     public int getGroupCount() {
-        return 10;
+
+        return mExpandableList.getGroupCount();
     }
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return 10;
+
+        return mExpandableList.getChildrenCount(groupPosition);
     }
 
     @Override
@@ -59,12 +63,17 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
 
         ViewHolder viewHolder = ViewHolder.get(mContext, convertView, parent, R.layout.expandable_group_layout, groupPosition);
-        ImageView imageView = viewHolder.getView(R.id.expandable_group_select);
-//        L.i("is expanded   " + isExpanded + " " + groupPosition);
+
+        ExpandableListViewGroupData groupData = mExpandableList.getGroup(groupPosition);
+        ((TextView)viewHolder.getView(R.id.contact_expandable_group_name)).
+                setText(groupData.getGroupName());
+        ((TextView)viewHolder.getView(R.id.contact_expandable_group_count)).
+                setText(groupData.getActiveChildCount() +  "/" + groupData.getChildCount());
+
+        ImageView imageView = viewHolder.getView(R.id.contact_expandable_group_select);
         if(isExpanded){
             imageView.setImageResource(R.drawable.skin_indicator_expanded);
         }else{
-
             imageView.setImageResource(R.drawable.skin_indicator_unexpanded);
         }
         return viewHolder.getConvertView();
@@ -74,13 +83,26 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
         ViewHolder viewHolder = ViewHolder.get(mContext, convertView, parent, R.layout.expandable_group_child_layout, childPosition);
+
+        ExpandableListViewData data = mExpandableList.getChild(groupPosition, childPosition);
+        if(data.getStatus() != null) {
+            StringBuilder s = new StringBuilder();
+            s.append("[").append(data.getStatus()).append("]");
+            ((TextView) viewHolder.getView(R.id.contact_expandable_group_child_chat_abstract))
+                    .setText(s.toString());
+        }else{
+            ((TextView) viewHolder.getView(R.id.contact_expandable_group_child_chat_abstract))
+                    .setText("");
+        }
+        TextView textView = viewHolder.getView(R.id.contact_friend_name_textView);
+        textView.setText(data.getUserName());
         return viewHolder.getConvertView();
     }
 
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
-        L.i("is child select able");
-        return false;
+//        L.i("is child select able");
+        return true;
     }
 
     @Override

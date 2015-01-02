@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="@dimen/abc_action_bar_stacked_max_height"
+    android:paddingLeft="@dimen/activity_custom_action_bar_padding_left"
+    android:paddingRight="@dimen/activity_custom_action_bar_padding_right"
+    android:background="@drawable/hpr"
+    android:gravity="center_vertical">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal"
+        android:id="@+id/login_setting_back"
+        android:gravity="center_vertical">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/header_btn_back_selector"
+            android:paddingRight="-22dp"
+            android:clickable="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/back"
+            android:textColor="@drawable/header_btn_back_string_color"
+            android:textSize="22sp"
+            android:id="@+id/top_bar_back_str"/>
+
+    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:layout_centerHorizontal="true"
+        android:text="@string/login_setting"
+        android:id="@+id/top_bar_center_string" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:layout_alignParentRight="true"
+        android:text="@string/login_setting_finish"
+        android:id="@+id/login_setting_finish" />
+</RelativeLayout>

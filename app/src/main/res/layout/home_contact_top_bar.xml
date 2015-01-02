@@ -5,7 +5,7 @@
     android:background="@drawable/hpr"
     android:gravity="center_vertical"
     android:paddingLeft="@dimen/activity_custom_action_bar_padding_left"
-    android:layout_height="@dimen/activity_custom_action_bar_height">
+    android:layout_height="@dimen/abc_action_bar_stacked_max_height">
 
     <TextView
         android:layout_width="wrap_content"

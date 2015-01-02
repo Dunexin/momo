@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/login_background">
+
+    <include
+        android:layout_height="@dimen/abc_action_bar_stacked_max_height"
+        android:layout_width="fill_parent"
+        layout="@layout/login_setting_top_bar"
+        android:id="@+id/login_setting_top_bar_id"
+        android:layout_alignParentTop="true"/>
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/login_edittext_selector"
+        android:hint="@string/server_ip_hint"
+        android:text="192.168.41.57"
+        android:paddingLeft="10dp"
+        android:id="@+id/login_server_ip"
+        android:layout_below="@+id/login_setting_top_bar_id"/>
+</RelativeLayout>
+

@@ -7,7 +7,7 @@
     <include
         android:layout_alignParentTop="true"
         layout="@layout/chat_room_top_bar"
-        android:layout_height="@dimen/activity_custom_action_bar_height"
+        android:layout_height="@dimen/abc_action_bar_stacked_max_height"
         android:id="@+id/chat_room_top_bar_layout"
         android:layout_width="wrap_content"/>
 

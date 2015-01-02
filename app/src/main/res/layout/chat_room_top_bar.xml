@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="@dimen/activity_custom_action_bar_height"
+    android:layout_height="@dimen/abc_action_bar_stacked_max_height"
     android:paddingLeft="@dimen/activity_custom_action_bar_padding_left"
     android:paddingRight="@dimen/activity_custom_action_bar_padding_right"
     android:background="@drawable/hpr"
@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="消息"
-        android:textColor="@color/white"
+        android:textColor="@drawable/header_btn_back_string_color"
         android:textSize="22sp"
         android:id="@+id/chat_room_top_bar_send"/>
 

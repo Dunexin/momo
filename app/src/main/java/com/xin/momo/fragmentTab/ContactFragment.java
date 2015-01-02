@@ -2,6 +2,7 @@ package com.xin.momo.fragmentTab;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,7 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 
+import com.xin.momo.Adapter.ExpandableList;
 import com.xin.momo.Adapter.ExpandableListViewAdapter;
+import com.xin.momo.ChatRoomActivity;
 import com.xin.momo.R;
 import com.xin.momo.utils.L;
 
@@ -20,16 +23,19 @@ import com.xin.momo.utils.L;
  * create an instance of this fragment.
  *
  */
-public class ContactFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+public class ContactFragment extends Fragment implements ExpandableListView.OnChildClickListener{
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
+    private ExpandableListView mExpandableListView;
+    private ExpandableList mExpandableList;
+    private ExpandableListViewAdapter expandableListViewAdapter;
+
+    private OnContactFragmentInteractionListener mListener;
 
     /**
      * Use this factory method to create a new instance of
@@ -39,7 +45,6 @@ public class ContactFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment ContactFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static ContactFragment newInstance(String param1, String param2) {
         ContactFragment fragment = new ContactFragment();
         Bundle args = new Bundle();
@@ -55,7 +60,12 @@ public class ContactFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        L.i("contact-attach");
+        try {
+            mListener = (OnContactFragmentInteractionListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
     }
 
     @Override
@@ -72,6 +82,7 @@ public class ContactFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         initWidget();
+        mListener.ContactFragmentCreated();
     }
 
     @Override
@@ -85,8 +96,38 @@ public class ContactFragment extends Fragment {
     private void initWidget(){
 
         mExpandableListView = (ExpandableListView) getActivity().findViewById(R.id.contact_expandable_list_view);
-        mExpandableListView.setAdapter(new ExpandableListViewAdapter(getActivity()));
+        mExpandableListView.setOnChildClickListener(this);
     }
 
-    private ExpandableListView mExpandableListView;
+    public void initExpandableListView(ExpandableList expandableList){
+
+        mExpandableList = expandableList;
+        expandableListViewAdapter = new ExpandableListViewAdapter(getActivity(), expandableList);
+        mExpandableListView.setAdapter(expandableListViewAdapter);
+    }
+
+    public void updateExpandableListView(){
+
+       expandableListViewAdapter.notifyDataSetChanged();
+    }
+
+    public interface OnContactFragmentInteractionListener {
+
+        public void ContactFragmentCreated();
+    }
+
+    /*
+     * Expandable list view child click
+     * start chatRoom Activity
+     */
+    @Override
+    public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+
+        L.i("child click " + groupPosition + "    " +childPosition);
+        Intent chatIntent = new Intent(getActivity(), ChatRoomActivity.class);
+        chatIntent.putExtra(ChatRoomActivity.CHAT_ROOM_ACTIVE_USER_NAME, mExpandableList.getChild(groupPosition, childPosition).getJID());
+
+        startActivity(chatIntent);
+        return true;
+    }
 }

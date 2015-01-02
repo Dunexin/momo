@@ -8,4 +8,6 @@
     <color name="black">#000000</color>
     <color name="line_color">#FFA4A4A4</color>
     <color name="chat_room_bottom_bar_back">#FFEBECEE</color>
+    <color name="text_color">#FF47BAE1</color>
+    <color name="white_alpha">#50FFFFFF</color>
 </resources>
