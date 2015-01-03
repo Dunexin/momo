@@ -16,8 +16,8 @@ public class DialogueListViewAdapter extends BaseAdapter{
 
     private Context mContext;
     private DialogueDataList mList;
-    private static String[] WHAT = {"user", "friend"};
-    private static int[] WHAT_TEXT_ID = {R.id.dialogue_item_user_text_view, R.id.dialogue_item_friend_text_view};
+    private final static String[] WHAT = {"user", "friend"};
+    private final static int[] WHAT_TEXT_ID = {R.id.dialogue_item_user_text_view, R.id.dialogue_item_friend_text_view};
 
     public DialogueListViewAdapter(Context mContext, DialogueDataList mList) {
 
@@ -74,8 +74,14 @@ public class DialogueListViewAdapter extends BaseAdapter{
         switch (message.getContentType()){
 
             case DialogueMessage.MESSAGE_CONTENT_TYPE_STRING:
-                mText = (TextView)viewHolder.getView(WHAT_TEXT_ID[message.getType()]);
-                mText.setText((SpannableStringBuilder)message.getMsg());
+                mText = viewHolder.getView(WHAT_TEXT_ID[message.getType()]);
+                if(message.getMsg() instanceof  SpannableStringBuilder){
+
+                    mText.setText((SpannableStringBuilder)message.getMsg());
+                }
+                else{
+                    mText.setText((CharSequence) message.getMsg());
+                }
                 break;
             default:
                 break;

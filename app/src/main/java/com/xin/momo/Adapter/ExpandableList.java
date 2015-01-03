@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class ExpandableList {
 
-    private List<List<ExpandableListViewData>> mList;
+    private List<List<RosterUserData>> mList;
     private List<ExpandableListViewGroupData> mGroupList;
     public ExpandableList(){
 
@@ -31,18 +31,18 @@ public class ExpandableList {
         return mGroupList.get(groupPosition);
     }
 
-    public ExpandableListViewData getChild(int groupPosition, int childPosition){
+    public RosterUserData getChild(int groupPosition, int childPosition){
 
         return mList.get(groupPosition).get(childPosition);
     }
 
     public  void addGroup(ExpandableListViewGroupData expandableListViewGroupData){
 
-        mList.add(new ArrayList<ExpandableListViewData>());
+        mList.add(new ArrayList<RosterUserData>());
         mGroupList.add(expandableListViewGroupData);
     }
 
-    public void addChild(int groupPosition, ExpandableListViewData expandableListViewData){
+    public void addChild(int groupPosition, RosterUserData expandableListViewData){
 
         mList.get(groupPosition).add(expandableListViewData);
     }

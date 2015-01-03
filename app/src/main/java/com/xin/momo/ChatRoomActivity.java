@@ -3,7 +3,6 @@ package com.xin.momo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -15,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.xin.momo.ActivityCallBack.ChatRoomActivityCallBack;
 import com.xin.momo.Adapter.DialogueMessage;
 import com.xin.momo.CustomView.CustomEditTextView;
 import com.xin.momo.fragmentTab.ChatRoomDialogueFragment;
@@ -22,12 +22,15 @@ import com.xin.momo.fragmentTab.ChatRoomFaceFragment;
 import com.xin.momo.utils.L;
 import com.xin.momo.utils.SoftInputKeyState;
 
+import org.jivesoftware.smack.Chat;
 
-public class ChatRoomActivity extends FragmentActivity implements
+
+public class ChatRoomActivity extends BindCoreServiceFragmentActivity implements
         View.OnClickListener, ChatRoomFaceFragment.OnFaceFragmentInteractionListener,
         ChatRoomDialogueFragment.OnDialogueFragmentInteractionListener{
 
-    public final static String CHAT_ROOM_ACTIVE_USER_NAME = "CHAT_ROOM_ACTIVE_USER_NAME";
+    public final static String CHAT_ROOM_ACTIVE_USER_JID = "CHAT_ROOM_ACTIVE_USER_JID";
+    public final static String ACTIVITY_TAG = "CHAT_ROOM_ACTIVITY";
     private static final int face_layout_height = 300;
 
 
@@ -44,6 +47,9 @@ public class ChatRoomActivity extends FragmentActivity implements
     private LinearLayout mSendBtnLayout;
     private CustomEditTextView mEditText;
 
+    private Chat mChat;
+    private String JID;
+
     private boolean isActiveInfo = false;
 
     @Override
@@ -51,14 +57,33 @@ public class ChatRoomActivity extends FragmentActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_room);
 
-        L.i(getIntent().getStringExtra(CHAT_ROOM_ACTIVE_USER_NAME));
-        L.i("chat Room create");
         initWidget();
-        chatRoomDialogueFragment = new ChatRoomDialogueFragment();
+        chatRoomDialogueFragment = ChatRoomDialogueFragment.newInstance(JID);
         getSupportFragmentManager().beginTransaction().
                 add(R.id.chat_room_dialogue, chatRoomDialogueFragment,
                         "CHAT_ROOM_DIALOGUE_FRAGMENT").
                 commit();
+
+    }
+
+    @Override
+    public void bindServiceFinish() {
+
+        getCoreService().setActivityCallBack(ACTIVITY_TAG, new ChatRoomActivityCallBack() {
+
+            @Override
+            public void sendChatMessage(DialogueMessage message) {
+                chatRoomDialogueFragment.sendMessageToFragment(message);
+            }
+        });
+
+        mChat = getCoreService().createActiveChat(JID);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
     }
 
     @Override
@@ -66,7 +91,7 @@ public class ChatRoomActivity extends FragmentActivity implements
 
         switch (v.getId()){
             case R.id.chat_room_bar_more_imageView:
-                L.i("more image_btn");
+                L.i("more image_btn ");
                 break;
             case R.id.chat_root_bar_qz_icon_face_imageView:
                 if(mFaceFragment == null){
@@ -87,8 +112,9 @@ public class ChatRoomActivity extends FragmentActivity implements
             case R.id.chat_room_send_button_voice:
                 break;
             case R.id.chat_room_send_button_info:
-                chatRoomDialogueFragment.sendMessageToFragment(
-                        DialogueMessage.getInstance(DialogueMessage.DIALOGUE_MESSAGE_TYPE_USER, mEditText.getText()));
+                DialogueMessage message = DialogueMessage.getInstance(DialogueMessage.DIALOGUE_MESSAGE_TYPE_USER, mEditText.getText());
+                chatRoomDialogueFragment.sendMessageToFragment(message);
+                getCoreService().sendMessageToChat(mChat, message);
                 mEditText.setText("");
                 break;
             case R.id.chat_room_back:
@@ -192,6 +218,8 @@ public class ChatRoomActivity extends FragmentActivity implements
     }
 
     private void initWidget(){
+
+        JID = getIntent().getStringExtra(CHAT_ROOM_ACTIVE_USER_JID);
 
         mSendVoiceBtn = (ImageView) View.inflate(this, R.layout.send_button_voice, null)
                 .findViewById(R.id.chat_room_send_button_voice);

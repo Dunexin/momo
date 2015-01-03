@@ -1,7 +1,7 @@
 package com.xin.manager;
 
 import com.xin.momo.Adapter.ExpandableList;
-import com.xin.momo.Adapter.ExpandableListViewData;
+import com.xin.momo.Adapter.RosterUserData;
 import com.xin.momo.Adapter.ExpandableListViewGroupData;
 import com.xin.momo.utils.L;
 import com.xin.service.CoreServiceCallBack;
@@ -11,7 +11,6 @@ import org.jivesoftware.smack.RosterEntry;
 import org.jivesoftware.smack.RosterGroup;
 import org.jivesoftware.smack.RosterListener;
 import org.jivesoftware.smack.packet.Presence;
-import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -23,17 +22,18 @@ public class RosterManager {
 
 
     public final static int EXPANDABLE_LIST_UPDATE = 0x2000001;
-    private XMPPTCPConnection xmpptcpConnection;
+    private static RosterManager rosterManager = null;
+
     private Roster mRoster;
     private ExpandableList expandableList;
-    private HashMap<String, ExpandableListViewData> dataMap;
+    private HashMap<String, RosterUserData> dataMap;
 
     private CoreServiceCallBack mCoreServiceCallBack;
 
-    public RosterManager() {
-        xmpptcpConnection = ConnectionControl.getConnectionSingleton().getXmpptcpConnection();
-        mRoster = xmpptcpConnection.getRoster();
+    private RosterManager() {
+
         dataMap = new HashMap<>();
+        mRoster = ConnectionControl.getConnectionSingleton().getXmpptcpConnection().getRoster();
 
         if(mRoster != null) {
             addRosterListener();
@@ -41,6 +41,27 @@ public class RosterManager {
         }
     }
 
+    public RosterEntry getRosterEntry(String user){
+
+        return mRoster.getEntry(user);
+    }
+
+    public RosterUserData getUser(String JID){
+
+        return dataMap.get(JID);
+    }
+    public static RosterManager getRosterManager(){
+
+        if(rosterManager == null){
+            synchronized (ConnectionControl.class){
+                if(rosterManager == null){
+                    rosterManager = new RosterManager();
+                }
+            }
+        }
+
+        return rosterManager;
+    }
 
     public ExpandableList getExpandableList(){
 
@@ -57,11 +78,15 @@ public class RosterManager {
             expandableList.addGroup(groupData);
             for(RosterEntry child : group.getEntries()){
 
-                ExpandableListViewData data = new ExpandableListViewData(child, groupData);
-                L.i(child.getUser() + "  status " + mRoster.getPresence(child.getUser()).isAvailable());
+                RosterUserData data = new RosterUserData(child, groupData);
+                data.setStatus(mRoster.getPresence(child.getUser()).getStatus());
+//                if(mRoster.getPresence(child.getUser()).isAvailable()){
+//
+//                    data.setStatus("在线");
+//                }
                 expandableList.addChild(i, data);
-
                 dataMap.put(child.getUser(), data);
+                L.i(child.getUser());
             }
             i ++;
         }
@@ -92,7 +117,7 @@ public class RosterManager {
             public void presenceChanged(Presence presence) {
 
                 String []from = presence.getFrom().split("/");
-                ExpandableListViewData viewData = dataMap.get(from[0]);
+                RosterUserData viewData = dataMap.get(from[0]);
                 viewData.setStatus(presence.getStatus());
                 mCoreServiceCallBack.sendMessageTagToCoreService(RosterManager.EXPANDABLE_LIST_UPDATE);
             }

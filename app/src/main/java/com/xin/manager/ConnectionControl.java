@@ -6,18 +6,12 @@ import com.xin.momo.Adapter.ExpandableList;
 import com.xin.momo.utils.L;
 import com.xin.service.CoreServiceCallBack;
 
-import org.jivesoftware.smack.Chat;
-import org.jivesoftware.smack.ChatManager;
-import org.jivesoftware.smack.ChatManagerListener;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.ConnectionListener;
-import org.jivesoftware.smack.MessageListener;
 import org.jivesoftware.smack.SmackConfiguration;
 import org.jivesoftware.smack.SmackException;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
-import org.jivesoftware.smack.packet.Message;
-import org.jivesoftware.smack.packet.Presence;
 import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 
 import java.io.IOException;
@@ -30,6 +24,7 @@ public class ConnectionControl {
     public final static int SERVER_CONNECTION_FAILED = 0x10000001;
     public final static int SERVER_CONNECTION_SUCCESSFUL = 0x1000002;
     public final static int SERVER_LOGIN_SUCCESSFUL = 0x1000003;
+    public final static int LOADING_ROSTER = 0x1000004;
 
     public final static int CONNECTION_SERVER = 0x1000010;
 
@@ -105,7 +100,11 @@ public class ConnectionControl {
     public void connectionServer(){
 
         try {
+            L.i("fladskjflajsdkljflk");
             if(xmpptcpConnection != null) {
+                if(xmpptcpConnection.isConnected()){
+                    xmpptcpConnection.disconnect();
+                }
                 xmpptcpConnection.connect();
             }
 
@@ -131,25 +130,6 @@ public class ConnectionControl {
         }
     }
 
-    public ExpandableList getExpanDableList(){
-
-        ChatManager.getInstanceFor(xmpptcpConnection).addChatListener(new ChatManagerListener() {
-            @Override
-            public void chatCreated(Chat chat, boolean b) {
-
-                L.i("chat create Thread name --" + Thread.currentThread().getName());
-                chat.addMessageListener(new MessageListener() {
-                    @Override
-                    public void processMessage(Chat chat, Message message) {
-                        L.i(message.getBody() + "   " + Thread.currentThread().getName() + " message type--" + message.getType());
-                    }
-                });
-            }
-        });
-        expandableList = new ExpandableList();
-        return expandableList;
-    }
-
     /**
      *
      * @param userName
@@ -159,18 +139,27 @@ public class ConnectionControl {
     public void login(String userName, String passCode, String resource){
 
         try {
-            xmpptcpConnection.login(userName, passCode, resource);
-            xmpptcpConnection.sendPacket(new Presence(Presence.Type.available));
-//            xmpptcpConnection.sendPacket(new Presence(P));
+            if(xmpptcpConnection.isConnected()) {
+
+                L.i(userName + passCode);
+                xmpptcpConnection.login(userName, passCode, resource);
+            }else{
+
+                mCoreServiceCallBack.connectServerFiled();
+            }
+
         } catch (XMPPException e) {
             mCoreServiceCallBack.loginFiled();
             e.printStackTrace();
         } catch (SmackException e) {
+            mCoreServiceCallBack.loginFiled();
             e.printStackTrace();
         } catch (IOException e) {
+            mCoreServiceCallBack.loginFiled();
             e.printStackTrace();
         }
     }
+
 
     public boolean isConnection(){
 
@@ -205,6 +194,7 @@ public class ConnectionControl {
         @Override
         public void authenticated(XMPPConnection connection) {
 
+            mCoreServiceCallBack.sendMessageTagToWorkThread(ConnectionControl.LOADING_ROSTER);
             mCoreServiceCallBack.sendMessageTagToCoreService(ConnectionControl.SERVER_LOGIN_SUCCESSFUL);
         }
 

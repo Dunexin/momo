@@ -17,11 +17,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.xin.Application.DataApplication;
+import com.xin.manager.RosterManager;
 import com.xin.momo.Adapter.DialogueDataList;
 import com.xin.momo.Adapter.DialogueListViewAdapter;
 import com.xin.momo.Adapter.DialogueMessage;
+import com.xin.momo.Adapter.RosterUserData;
 import com.xin.momo.R;
 
 import java.util.HashMap;
@@ -45,21 +48,17 @@ public class ChatRoomDialogueFragment extends Fragment {
     private Handler mHandler;
     private Handler mThreadHandler;
 
-    // TODO: Rename parameter arguments, choose names that match
+    private RosterUserData user;
+
+    private String JID;
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_PARAM_JID = "Friend JID";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
-    // TODO: Rename and change types and number of parameters
-    public static ConversationFragment newInstance(String param1, String param2) {
-        ConversationFragment fragment = new ConversationFragment();
+    public static ChatRoomDialogueFragment newInstance(String JID) {
+        ChatRoomDialogueFragment fragment = new ChatRoomDialogueFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_PARAM_JID, JID);
         fragment.setArguments(args);
         return fragment;
     }
@@ -72,8 +71,9 @@ public class ChatRoomDialogueFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            JID = getArguments().getString(ARG_PARAM_JID);
+
+            user = RosterManager.getRosterManager().getUser(JID);
         }
     }
 
@@ -84,7 +84,6 @@ public class ChatRoomDialogueFragment extends Fragment {
         return inflater.inflate(R.layout.chat_room_dialogue_list_view_layout, container, false);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onDialogueFragmentInteraction(uri);
@@ -119,9 +118,13 @@ public class ChatRoomDialogueFragment extends Fragment {
 
         mHandler = new Handler();
         mList = new DialogueDataList();
+
         mListView = (ListView) getActivity().findViewById(R.id.chat_room_dialogue_list_view);
         mAdapter = new DialogueListViewAdapter(getActivity(), mList);
         mListView.setAdapter(mAdapter);
+
+        ((TextView)getActivity().findViewById(R.id.chat_room_friend_name_textView)).setText(user.getUserName());
+        ((TextView)getActivity().findViewById(R.id.chat_room_friend_status)).setText(user.getStatus());
     }
 
     private void initDialoguePattern(){
@@ -137,8 +140,8 @@ public class ChatRoomDialogueFragment extends Fragment {
     }
     public void sendMessageToFragment(DialogueMessage mDialogueMessage){
 
-        final DialogueMessage dialogueMessage = mDialogueMessage;
-       mThreadHandler.sendMessage(mThreadHandler.obtainMessage(1, dialogueMessage));
+        mThreadHandler.sendMessage(mThreadHandler.obtainMessage(1, mDialogueMessage));
+
     }
     public interface OnDialogueFragmentInteractionListener {
 
@@ -161,7 +164,7 @@ public class ChatRoomDialogueFragment extends Fragment {
 
                     DialogueMessage dialogueMessage = (DialogueMessage)msg.obj;
 
-                    if(dialogueMessage.getType() == DialogueMessage.MESSAGE_CONTENT_TYPE_STRING){
+                    if(dialogueMessage.getContentType() == DialogueMessage.MESSAGE_CONTENT_TYPE_STRING){
                         String chatMsg = dialogueMessage.getMsg().toString();
                         Matcher matcher = mDialoguePattern.matcher(chatMsg);
                         SpannableStringBuilder builder = new SpannableStringBuilder(chatMsg);

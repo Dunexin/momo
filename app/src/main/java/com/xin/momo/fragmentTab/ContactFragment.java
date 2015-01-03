@@ -123,9 +123,8 @@ public class ContactFragment extends Fragment implements ExpandableListView.OnCh
     @Override
     public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
 
-        L.i("child click " + groupPosition + "    " +childPosition);
         Intent chatIntent = new Intent(getActivity(), ChatRoomActivity.class);
-        chatIntent.putExtra(ChatRoomActivity.CHAT_ROOM_ACTIVE_USER_NAME, mExpandableList.getChild(groupPosition, childPosition).getJID());
+        chatIntent.putExtra(ChatRoomActivity.CHAT_ROOM_ACTIVE_USER_JID, mExpandableList.getChild(groupPosition, childPosition).getJID());
 
         startActivity(chatIntent);
         return true;

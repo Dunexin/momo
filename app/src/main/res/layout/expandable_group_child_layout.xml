@@ -11,47 +11,54 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginRight="-5dp"
         android:layout_marginLeft="-10dp"
         android:id="@+id/expandable_group_child_head_image"
         android:src="@drawable/gco"/>
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical"
-        android:layout_toEndOf="@+id/expandable_group_child_head_image">
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="27.5dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:id="@+id/contact_friend_name_textView"
-                android:layout_alignParentLeft="true"
-                android:text="宝贝"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:gravity="center_vertical"
-                android:layout_toLeftOf="@+id/expandable_group_child_call"/>
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/qq_contacts_network_2g"
-                android:layout_alignParentRight="true"
-                android:gravity="center"
-                android:id="@+id/expandable_group_child_call"
-                />
-        </RelativeLayout>
 
         <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="17.5dp"
-            android:singleLine="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/contact_friend_name_textView"
+            android:text="宝贝"
+            android:textColor="@color/black"
+            android:textSize="22sp"
             android:gravity="center_vertical"
-            android:id="@+id/contact_expandable_group_child_chat_abstract"
-            android:ellipsize="end"
-            android:textColor="#FF7D7D7D"
-            android:textSize="15sp"/>
-    </LinearLayout>
+            android:layout_alignTop="@+id/expandable_group_child_call"
+            android:layout_toRightOf="@+id/expandable_group_child_head_image"
+            android:layout_toEndOf="@+id/expandable_group_child_head_image" />
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/qq_contacts_network_2g"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:id="@+id/expandable_group_child_call"
+            />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="17dp"
+        android:singleLine="true"
+        android:gravity="center_vertical"
+        android:id="@+id/contact_expandable_group_child_chat_abstract"
+        android:ellipsize="end"
+        android:text="[离线]"
+        android:textColor="@color/list_text_color"
+        android:textSize="14sp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/contact_friend_name_textView"
+        android:layout_alignStart="@+id/contact_friend_name_textView" />
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="17dp"
+        android:singleLine="true"
+        android:gravity="center_vertical"
+        android:textColor="@color/list_text_color"
+        android:id="@+id/contact_expandable_group_child_mood"
+        android:ellipsize="end"
+        android:textSize="14sp"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/contact_expandable_group_child_chat_abstract"
+        android:layout_toEndOf="@+id/contact_expandable_group_child_chat_abstract" />
 </RelativeLayout>

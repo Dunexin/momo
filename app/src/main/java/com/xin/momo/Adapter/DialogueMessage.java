@@ -8,8 +8,8 @@ public class DialogueMessage {
     public static final  int DIALOGUE_MESSAGE_TYPE_USER = 0;
     public static final  int DIALOGUE_MESSAGE_TYPE_FRIEND = 1;
 
-    public static final int MESSAGE_CONTENT_TYPE_STRING = 0;
-    public static final int MESSAGE_CONTENT_TYPE_IMAGE = 1;
+    public static final int MESSAGE_CONTENT_TYPE_STRING = 0x9200001;
+    public static final int MESSAGE_CONTENT_TYPE_IMAGE =  0x9200001;;
 
     static private int typeCount = 2;
     private int type;

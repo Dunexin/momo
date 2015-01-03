@@ -7,7 +7,7 @@ import org.jivesoftware.smack.RosterEntry;
 /**
  * Created by Administrator on 2014/12/23.
  */
-public class ExpandableListViewData {
+public class RosterUserData {
 
     private String userName;
     private String status;
@@ -18,7 +18,7 @@ public class ExpandableListViewData {
 
 
 
-    public ExpandableListViewData(RosterEntry rosterEntry, ExpandableListViewGroupData groupData){
+    public RosterUserData(RosterEntry rosterEntry, ExpandableListViewGroupData groupData){
 
         mRosterEntry = rosterEntry;
         this.userName = mRosterEntry.getName();
@@ -49,7 +49,11 @@ public class ExpandableListViewData {
         else if(this.status == null && status != null){
             mGroup.changeActiveChildCount(1);
         }
-        this.status = status;
+        if(status != null){
+            this.status = status;
+        }else{
+            this.status = "离线";
+        }
     }
 
     public Bitmap getHeadImage() {

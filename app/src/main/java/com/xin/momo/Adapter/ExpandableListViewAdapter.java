@@ -84,18 +84,15 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 
         ViewHolder viewHolder = ViewHolder.get(mContext, convertView, parent, R.layout.expandable_group_child_layout, childPosition);
 
-        ExpandableListViewData data = mExpandableList.getChild(groupPosition, childPosition);
-        if(data.getStatus() != null) {
-            StringBuilder s = new StringBuilder();
-            s.append("[").append(data.getStatus()).append("]");
-            ((TextView) viewHolder.getView(R.id.contact_expandable_group_child_chat_abstract))
-                    .setText(s.toString());
-        }else{
-            ((TextView) viewHolder.getView(R.id.contact_expandable_group_child_chat_abstract))
-                    .setText("");
-        }
+        RosterUserData data = mExpandableList.getChild(groupPosition, childPosition);
+        StringBuilder s = new StringBuilder();
+        s.append("[").append(data.getStatus()).append("]");
+        ((TextView) viewHolder.getView(R.id.contact_expandable_group_child_chat_abstract))
+                .setText(s.toString());
         TextView textView = viewHolder.getView(R.id.contact_friend_name_textView);
         textView.setText(data.getUserName());
+
+        ((TextView)viewHolder.getView(R.id.contact_expandable_group_child_mood)).setText("");
         return viewHolder.getConvertView();
     }
 
