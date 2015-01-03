@@ -19,7 +19,6 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/login_edittext_selector"
         android:hint="@string/user_name_hint"
-        android:text="stop"
         android:paddingLeft="10dp"
         android:id="@+id/user_account"
         android:layout_below="@+id/user_image"/>
@@ -28,7 +27,6 @@
         android:layout_height="wrap_content"
         android:background="@drawable/login_edittext_selector"
         android:layout_below="@+id/user_account"
-        android:text="stop"
         android:paddingLeft="10dp"
         android:inputType="textPassword"
         android:id="@+id/user_passCode"

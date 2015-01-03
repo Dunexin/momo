@@ -1,6 +1,8 @@
 package com.xin.momo;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,12 +22,20 @@ import java.util.TimerTask;
 public class LoginActivity extends BindCoreServiceActivity implements OnClickListener {
 
     public final static String ACTIVITY_TAG = "LOGIN_ACTIVITY";
+    public final static String USER_ACCOUNT_TAG = "USER_ACCOUNT";
+    public final static String USER_PASS_CODE_TAG = "USER_PASS_CODE";
     private EditText mAccount = null;
     private EditText mPassCode = null;
     private ImageView mHeadImage = null;
     private Button mSignInButton = null;
     private boolean backKeyClickNum = false;
     private boolean isConnectionServer = false;
+
+    private String userAccount;
+    private String passCode;
+
+    private SharedPreferences.Editor editor;
+    private SharedPreferences sharedPreferences;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,8 +66,8 @@ public class LoginActivity extends BindCoreServiceActivity implements OnClickLis
 
     private void login(){
 
-        String userAccount = mAccount.getText().toString();
-        String passCode = mPassCode.getText().toString();
+        userAccount = mAccount.getText().toString();
+        passCode = mPassCode.getText().toString();
 
         if(userAccount.length() == 0){
             T.showShort(this, getResources().getString(R.string.user_account_empty));
@@ -95,6 +105,11 @@ public class LoginActivity extends BindCoreServiceActivity implements OnClickLis
             public void onLoginSuccess() {
 
                 L.i("login success");
+
+                editor = sharedPreferences.edit();
+                editor.putString(USER_ACCOUNT_TAG, userAccount);
+                editor.putString(USER_PASS_CODE_TAG, passCode);
+                editor.commit();
                 startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                 finish();
             }
@@ -116,7 +131,7 @@ public class LoginActivity extends BindCoreServiceActivity implements OnClickLis
     public void onBackPressed() {
 
 
-        if(backKeyClickNum == false){
+        if(!backKeyClickNum){
             Toast.makeText(this, R.string.back_key_Confirmation, Toast.LENGTH_SHORT).show();
             backKeyClickNum = true;
             new Timer().schedule(new TimerTask() {
@@ -138,5 +153,9 @@ public class LoginActivity extends BindCoreServiceActivity implements OnClickLis
         mHeadImage = (ImageView) findViewById(R.id.user_image);
         findViewById(R.id.login_setting).setOnClickListener(this);
         mSignInButton.setOnClickListener(this);
+
+        sharedPreferences = getSharedPreferences(ACTIVITY_TAG, Context.MODE_PRIVATE);
+        mAccount.setText(sharedPreferences.getString(USER_ACCOUNT_TAG, ""));
+        mPassCode.setText(sharedPreferences.getString(USER_PASS_CODE_TAG, ""));
     }
 }
