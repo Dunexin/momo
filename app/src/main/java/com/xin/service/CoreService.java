@@ -66,6 +66,8 @@ public class CoreService extends Service {
                 mConnectionControl.unConnectionServer();
             }
         });
+        chatHandler.getLooper().quit();
+        threadHandler.getLooper().quit();
     }
 
     @Override
